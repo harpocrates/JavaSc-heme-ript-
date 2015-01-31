@@ -5,7 +5,7 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
 
 [Try it out in your browser now][1].
 
-[1]: http://cdn.rawgit.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme|ript%29_REPL.html "JavaSc(heme|ript)""
+[1]: http://rawgit.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme|ript%29_REPL.html "JavaSc(heme|ript)""
 
 ## Features
 
