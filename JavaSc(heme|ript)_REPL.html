@@ -8,7 +8,7 @@
   <script type="text/javascript">
     'use strict'
     exports.globals.dict['display'] = function(x) {
-      output.value += to_string(x)+'\n';
+      document.getElementById('output_area').value += to_string(x)+'\n';
     };
 
     // Load file
@@ -30,7 +30,13 @@
     };
     xmlhttp.open("GET", "Standard_Functions.jscm", true);
     xmlhttp.send();
-    setTimeout(function () { loadFile(file); }, 5000)
+    setTimeout(function () {
+      xmlhttp.abort()
+      var output = document.getElementById('output_area')
+      output += 'Failed (you might be previewing this from GitHub).\nAttempting back up load...';
+      loadFile(file);
+      output += 'Done.\n';
+    }, 1000)
 
     // Run 'input' and send results to 'output'
     function runContents() {
