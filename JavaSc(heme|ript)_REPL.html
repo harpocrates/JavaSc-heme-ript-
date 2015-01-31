@@ -37,7 +37,7 @@
         if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) return;
         xmlhttp.abort()
         var output = document.getElementById('output_area').value
-             += 'Failed. (You might be previewing this from GitHub).\nAttempting back up load... ';
+             += 'Failed. (You might be previewing this from GitHub).\nAttempting backup load... ';
         loadFile(file);
       }, 1000)
     }
