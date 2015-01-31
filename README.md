@@ -10,10 +10,10 @@ Follow this link to try it out now in your browser.
 
       ```scheme
       (define (fib n)
-        (local [(define (fib1 n fn fm)
+        (local ((define (fib1 n fn fm)
                   (if (= n 0)
                       fn
-                      (fib1 (- n 1) fm (+ fn fm))))]
+                      (fib1 (- n 1) fm (+ fn fm)))))
           (fib1 n 0 1)))
       ```
 
@@ -57,7 +57,6 @@ Follow this link to try it out now in your browser.
 
 The fixed-point combinator (aka the Y combinator) for transforming recursive functions into non-recursive ones using first-class and anonymous functions.
 
-    ```scheme
     (define (Y f)
       ((lambda (x) (x x))
           (lambda (x) (f (lambda (y) ((x x) y))))))
@@ -66,7 +65,5 @@ The fixed-point combinator (aka the Y combinator) for transforming recursive fun
       (lambda (n) (if (= n 0) 1 (* n (f (- n 1))))))
 
     (define factorial (Y almost_fact))
-
-    ```
 
 Calling `(fact 21)` gives `51090942171709440000`.
