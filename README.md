@@ -18,7 +18,7 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
                       fn
                       (fib1 (- n 1) fm (+ fn fm))))]
           (fib1 n 0 1)))
-          
+
       (fib 100)
       => 354224848179262000000
       ```
@@ -29,7 +29,7 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
       ```racket
       (define-macro (unless condition body)
         `(if ,condition void ,body))
-        
+
       (unless true "Hello")
       (unless false "World")
       => "World"
