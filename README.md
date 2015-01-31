@@ -42,6 +42,8 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
       (map (expt 2) '(1 2 3 4 5 6 7 8 9 10))
       => (2 4 8 16 32 64 128 256 512 1024)
       ```
+   
+   Note that currying implies that for a function `f` of three arguments `(((f a) b) c)`, `((f a b) c)`, `((f a) b c)`, and `(f a b c)` will evaluate to the same thing.
   * _Error stack trace_: The error message will hopefully be helpful, and the stack trace will tell you where the problem came from. In the following code, the function `map` expects a functions and a list as arguments.
 
       ```racket
@@ -62,7 +64,8 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
   * s-expressions aren't really s-expressions - just arrays.
   * variadic functions aren't supported (except for `list` and fundamental forms). Otherwise, function-currying would be too complex for the user.
   * fundamental forms `define-syntax`, `let-syntax`, `letrec-syntax`, `syntax-rules` are not defined - they are replaced by `define-macro` similar to the LISP `defmacro`
-  * the numerical tower is completely off. Numbers are just JavaScript numbers. Same goes for all other types.
+  * a couple forms like `do` and `case` are implemented partially and `delay` is not implemented.
+  * the numerical tower is completely off. Numbers are just JavaScript numbers. Same goes for all other types - there are no vectors, characters, or pairs.
 
 ## Example
 
