@@ -42,7 +42,7 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
       (map (expt 2) '(1 2 3 4 5 6 7 8 9 10))
       => (2 4 8 16 32 64 128 256 512 1024)
       ```
-   
+
    Note that currying implies that for a function `f` of three arguments `(((f a) b) c)`, `((f a b) c)`, `((f a) b c)`, and `(f a b c)` will evaluate to the same thing.
   * _Error stack trace_: The error message will hopefully be helpful, and the stack trace will tell you where the problem came from. In the following code, the function `map` expects a functions and a list as arguments.
 
