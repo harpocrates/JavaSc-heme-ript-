@@ -49,7 +49,7 @@ Also included is a `.tmlanguage` definition of JavaSc(heme|ript), compatible wit
       ```
 
    Note that currying implies that for a function `f` of three arguments `(((f a) b) c)`, `((f a b) c)`, `((f a) b c)`, and `(f a b c)` will evaluate to the same thing.
-  * _Error stack trace_: The error message will hopefully be helpful, and the stack trace will tell you where the problem came from. In the following code, the function `map` expects a functions and a list as arguments.
+  * _Error stack trace_: The error message will hopefully be helpful, and the stack trace will tell you where the problem came from. In the following code, the function `map` expects a function and a list as arguments. Instead of the function, it gets the literal `9`.
 
       ```racket
       (append (list 1 2 3 4) (map 9 (list 5 6 7 8)))
