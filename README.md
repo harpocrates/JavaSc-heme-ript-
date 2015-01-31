@@ -18,6 +18,9 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
                       fn
                       (fib1 (- n 1) fm (+ fn fm))))]
           (fib1 n 0 1)))
+          
+      (fib 100)
+      => 354224848179262000000
       ```
 
    There is no stack overflow from calling a function `(f false)` defined `(define (f x) (f x))`. The REPL will just hang indefinitely.
@@ -26,6 +29,10 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
       ```racket
       (define-macro (unless condition body)
         `(if ,condition void ,body))
+        
+      (unless true "Hello")
+      (unless false "World")
+      => "World"
       ```
 
    The usual quote `'`, quasiquote `` ` ``, unquote `,`, and unquote-splicing `,@` apply.
@@ -33,6 +40,7 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
 
       ```racket
       (map (expt 2) '(1 2 3 4 5 6 7 8 9 10))
+      => (2 4 8 16 32 64 128 256 512 1024)
       ```
   * _Error stack trace_: The error message will hopefully be helpful, and the stack trace will tell you where the problem came from. In the following code, the function `map` expects a functions and a list as arguments.
 
