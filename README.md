@@ -11,19 +11,19 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
 
   * _Tail call optimized_: The following piece of code to find the nth fibonnacci number will never produce a stack overflow because the function that is doing all the work, `fib1`, is in tail position.
 
-      ```scheme
+      ```racket
       (define (fib n)
-        (local ((define (fib1 n fn fm)
+        (local [(define (fib1 n fn fm)
                   (if (= n 0)
                       fn
-                      (fib1 (- n 1) fm (+ fn fm)))))
+                      (fib1 (- n 1) fm (+ fn fm))))]
           (fib1 n 0 1)))
       ```
 
    There is no stack overflow from calling a function `(f false)` defined `(define (f x) (f x))`. The REPL will just hang indefinitely.
   * _Macros_: This is borrowed from early LISP style, compared to the Scheme syntax rules. A macro is just a function that is evaluated before all other functions, doesn't evaluate its arguments, and returns an s-expression. For example, an `unless` macro is defined in the standard functions file as
 
-      ```scheme
+      ```racket
       (define-macro (unless condition body)
         `(if ,condition void ,body))
       ```
@@ -31,12 +31,12 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
    The usual quote `'`, quasiquote `` ` ``, unquote `,`, and unquote-splicing `,@` apply.
   * _Currying_: An optional feature to permit partial application of functions (inspired from Haskell). For example, since `*` is a function that accepts two arguments, `(* 2)` is equivalent to `(lambda (n) (* 2 n))`. This makes something like generating a list of powers of two a bit simpler:
 
-      ```scheme
+      ```racket
       (map (expt 2) '(1 2 3 4 5 6 7 8 9 10))
       ```
   * _Error stack trace_: The error message will hopefully be helpful, and the stack trace will tell you where the problem came from. In the following code, the function `map` expects a functions and a list as arguments.
 
-      ```scheme
+      ```racket
       (append (list 1 2 3 4) (map 9 (list 5 6 7 8)))
       ```
 
@@ -60,16 +60,21 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
 
 The fixed-point combinator (aka the Y combinator) for transforming recursive functions into non-recursive ones using first-class and anonymous functions.
 
-    (define (Y f)
-      ((lambda (x) (x x))
-          (lambda (x) (f (lambda (y) ((x x) y))))))
+```racket
+; Y combinator
+(define (Y f)
+  ((lambda (x) (x x))
+     (lambda (x) (f (lambda (y) ((x x) y))))))
 
-    (define (almost_factorial f)
-      (lambda (n)
-        (if (equal? n 0)
-            1
-            (* n (f (- n 1))))))
+; Not quite factorial, almost though
+(define (almost_factorial f)
+  (lambda (n)
+    (if (equal? n 0)
+        1
+        (* n (f (- n 1))))))
 
-    (define factorial (Y almost_fact))
+; A full-fledged factorial function without any recursion/loops
+(define factorial (Y almost_fact))
+```
 
-Calling `(fact 21)` gives `51090942171709440000`.
+Calling `(factorial 21)` gives `51090942171709440000`.
