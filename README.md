@@ -6,7 +6,7 @@ Follow this link to try it out now in your browser.
 
 ## Features
 
-  * _Tail recursion optimized_: The following piece of code to find the nth fibonnacci number will never produce a stack overflow because the function that is doing all the work, `fib1`, is in tail position.
+  * _Tail call optimized_: The following piece of code to find the nth fibonnacci number will never produce a stack overflow because the function that is doing all the work, `fib1`, is in tail position.
 
       ```scheme
       (define (fib n)
@@ -62,7 +62,10 @@ The fixed-point combinator (aka the Y combinator) for transforming recursive fun
           (lambda (x) (f (lambda (y) ((x x) y))))))
 
     (define (almost_factorial f)
-      (lambda (n) (if (= n 0) 1 (* n (f (- n 1))))))
+      (lambda (n)
+        (if (equal? n 0)
+            1
+            (* n (f (- n 1))))))
 
     (define factorial (Y almost_fact))
 

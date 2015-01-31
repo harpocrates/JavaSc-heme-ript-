@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <title>JavaSc(heme|ript) 2.2</title>
+  <script type="text/javascript" src="JavaSc(heme|ript).js"></script>
+  <script type="text/javascript">
+    'use strict'
+    exports.globals.dict['display'] = function(x) {
+      output.value += to_string(x)+'\n';
+    };
+
+    // AJAX request to load 'Standard_Functions.jscm'
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {
+        var parsed, file = xmlhttp.responseText;
+        for (var i in file)
+          if ((parsed = exports.read_line(file[i])) != null)
+            exports.evaluate(parsed);
+        document.getElementById("run_button").disabled = false;
+        document.getElementById('output_area').value += 'Done.\n>';
+      }
+    };
+    xmlhttp.open("GET", "Standard_Functions.jscm", true);
+    xmlhttp.send();
+
+    // Run 'input' and send results to 'output'
+    function runContents() {
+    var input      = document.getElementById('input_area'),
+        output     = document.getElementById('output_area');
+
+      var input_lines = input.value.split('\n');
+      input.value = '';
+
+      for (var i in input_lines) {
+        var line      = input_lines[i];
+        if (line.trim() === '') continue;
+        var parsed    = exports.read_line(line);
+        output.value += line.replace(/\s+$/g, '').concat('\n');
+        var evaluated = (parsed !== null) ? exports.evaluate(parsed) : undefined;
+
+        if (evaluated !== undefined)
+          output.value += exports.to_string(evaluated).concat('\n')
+
+        output.value += (parsed == null) ? '|' : '>';
+      }
+      output.scrollTop = output.scrollHeight;
+    }
+
+    function toggleCurrying(checkbox) {
+      exports.curry = checkbox.checked;
+    }
+  </script>
+</head>
+<body>
+
+<h1>JavaSc(heme|ript) 2.2</h1>
+<table width="100%">
+<tr><td>
+<textarea rows="24" style="width:100%;resize:vertical;" id="output_area" readonly>Loading Standard Functions... </textarea>
+</td></tr>
+<tr><td>
+Enter your program below and press "Run".<br>
+<textarea rows="24" style="width:100%;resize:vertical;" id="input_area" autofocus>;; A tail-recursive Fibonacci function
+(define (fib n)
+  (local [(define (fib1 n fn fm)
+            (if (= n 0)
+                fn
+                (fib1 (- n 1) fm (+ fn fm))))]
+    (fib1 n 0 1)))
+
+;; ...and some tests for it
+(fib 0)
+(fib 1)
+(fib 35)
+
+;; and some wacky stuff to go!
+(define (reverse l)
+ (foldl (flip cons) empty l))
+
+(reverse (list 1 2 3 4))
+
+;; With function currying enabled, *, which is normally takes two arguments (* a b) can be partially applied to produce a simple doubling function (* 2).
+(map (* 2) '(1 2 3 4 5))
+(map (lambda (n) (* 2 n)) '(1 2 3 4 5))
+</textarea>
+</td></tr>
+</table>
+<!-- <br> -->
+<button type="button" id="run_button" onclick="runContents()" disabled>Run</button>
+<label><input type="checkbox" onclick="toggleCurrying(this);" checked> Curry functions</label>
+</body>
+</html>
