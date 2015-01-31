@@ -4,10 +4,6 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
 
 [Try it out in your browser now][1].
 
-A screenshot of the Node.js REPL, run from the console, is included below.
-
-![Console](https://raw.githubusercontent.com/harpocrates/JavaSc-heme-ript-/master/Images/screencapture-1.png)
-
 Also included is a `.tmlanguage` definition of JavaSc(heme|ript), compatible with a variety of text editors including Sublime Text and Textmate.
 
 [1]: http://rawgit.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme|ript%29_REPL.html "JavaSc(heme|ript)""
@@ -72,7 +68,7 @@ Also included is a `.tmlanguage` definition of JavaSc(heme|ript), compatible wit
   * a couple forms like `do` and `case` are implemented partially and `delay` is not implemented.
   * the numerical tower is completely off. Numbers are just JavaScript numbers. Same goes for all other types - there are no vectors, characters, or pairs.
 
-## Example
+## Example and Screenshot
 
 The fixed-point combinator (aka the Y combinator) for transforming recursive functions into non-recursive ones using first-class and anonymous functions.
 
@@ -93,4 +89,6 @@ The fixed-point combinator (aka the Y combinator) for transforming recursive fun
 (define factorial (Y almost_fact))
 ```
 
-Calling `(factorial 21)` gives `51090942171709440000`.
+Calling `(factorial 21)` gives `51090942171709440000`. A screenshot of the Node.js REPL, run from the console, is included below.
+
+![Console](https://raw.githubusercontent.com/harpocrates/JavaSc-heme-ript-/master/Images/screencapture-1.png)
