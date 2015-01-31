@@ -3,12 +3,22 @@
 <head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <title>JavaSc(heme|ript) 2.2</title>
-  <script type="text/javascript" src="https://raw.githubusercontent.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme|ript%29.js"></script>
+  <script type="text/javascript" src="JavaSc(heme|ript).js"></script>
+  <script type="text/javascript" src="Standard_Functions.js"></script>
   <script type="text/javascript">
     'use strict'
     exports.globals.dict['display'] = function(x) {
       output.value += to_string(x)+'\n';
     };
+
+    // Load file
+    function loadFile (string) {
+      for (var i in string)
+          if ((parsed = exports.read_line(string[i])) != null)
+            exports.evaluate(parsed);
+      document.getElementById("run_button").disabled = false;
+      document.getElementById('output_area').value += 'Done.\n>';
+    }
 
     // AJAX request to load 'Standard_Functions.jscm'
     var xmlhttp = new XMLHttpRequest();
@@ -16,15 +26,12 @@
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {
         var parsed, file = xmlhttp.responseText;
-        for (var i in string_content)
-          if ((parsed = exports.read_line(string_content[i])) != null)
-            exports.evaluate(parsed);
-        document.getElementById("run_button").disabled = false;
-        document.getElementById('output_area').value += 'Done.\n>';
+        loadFile(file);
       }
     };
     xmlhttp.open("GET", "Standard_Functions.jscm", true);
     xmlhttp.send();
+    setTimeout(function () { loadFile(file); }, 5000)
 
     // Run 'input' and send results to 'output'
     function runContents() {
