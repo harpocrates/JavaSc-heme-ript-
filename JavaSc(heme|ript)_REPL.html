@@ -31,11 +31,11 @@
     xmlhttp.open("GET", "Standard_Functions.jscm", true);
     xmlhttp.send();
     setTimeout(function () {
+      if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) return;
       xmlhttp.abort()
-      var output = document.getElementById('output_area')
-      output += 'Failed (you might be previewing this from GitHub).\nAttempting back up load...';
+      var output = document.getElementById('output_area').value
+           += 'Failed (you might be previewing this from GitHub).\nAttempting back up load...';
       loadFile(file);
-      output += 'Done.\n';
     }, 1000)
 
     // Run 'input' and send results to 'output'
