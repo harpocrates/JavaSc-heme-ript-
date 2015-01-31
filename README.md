@@ -2,8 +2,13 @@
 
 A minimal 400 line implementation of a simple Scheme dialect, built around existing Javascript types. Included are two REPL (read eval print loop) programs - one browser based and the other Node.js based.
 
-
 [Try it out in your browser now][1].
+
+A screenshot of the Node.js REPL, run from the console, is included below.
+
+![Console](https://raw.githubusercontent.com/harpocrates/JavaSc-heme-ript-/master/Images/screencapture-1.png)
+
+Also included is a `.tmlanguage` definition of JavaSc(heme|ript), compatible with a variety of text editors including Sublime Text and Textmate.
 
 [1]: http://rawgit.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme|ript%29_REPL.html "JavaSc(heme|ript)""
 

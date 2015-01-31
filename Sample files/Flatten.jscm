@@ -1,0 +1,14 @@
+(define (flatten nested-list)
+  (cond [(atom?  nested-list) nested-list]
+        [else
+          (foldl1
+            append
+            (map (lambda (n) (if (list? n) (flatten n) (list n)))
+                 nested-list))]))
+
+(flatten '(1 2 (3 4) (5 (6 8) (9 10))))
+(flatten (list true (list "string" 'symbol) 1 2 (list (list empty?))))
+
+
+
+(atom? '(1 2 (3 4) (5 (6 8) (9 10))))

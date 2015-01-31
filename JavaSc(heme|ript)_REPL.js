@@ -10,7 +10,7 @@ interpreter.colors = true;
 // Load standard functions and other files. A '!' at the end of the filename
 // indicates the line by line output will not be displayed
 
-var queued_files = ['/run/media/alec/FILES/alec\'s documents/School/14-15/Mine/JavaScript/JavaSc(heme|ript)/Standard_Functions.jscm!'].concat(process.argv.slice(2));
+var queued_files = ['/run/media/alec/FILES/alec\'s documents/School/14-15/Mine/JavaSc(heme|ript)/Standard_Functions.jscm!'].concat(process.argv.slice(2));
 process.stdout.write('JavaSc(heme|ript) 2.2\n');
 console.log('Loading '+queued_files.join(', ')+'...');
 queued_files.forEach(function (filename) {

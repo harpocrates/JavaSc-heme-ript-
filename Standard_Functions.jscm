@@ -10,6 +10,7 @@
 
 (define (empty? l) (= 0 (length l)))
 (define (cons? l) (and (list? l) (not (empty? l))))
+(define (atom? x) (not (list? x)))
 
 ;; filter :: (x -> bool) [x] -> [x]
 (define (filter p? l)
