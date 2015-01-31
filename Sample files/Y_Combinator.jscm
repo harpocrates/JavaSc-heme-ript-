@@ -1,0 +1,59 @@
+(define (factorial n)
+  (recur factorial ([n n] [acc 1])
+    (if (equal? n 0)
+        acc
+        (factorial (- n 1) (* n acc)))))
+
+(define (fibonnaci n)
+  (recur fibonnaci ([n n] [fn 0] [fm 1])
+    (if (equal? n 0)
+        fn
+        (fibonnaci (- n 1) fm (+ fn fm)))))
+
+(for-each
+  (lambda (n) (unless (= n 0)
+    (print (foldl1 string-append (map
+      to-string
+      (list "n: " n " fibonnaci: " (fibonnaci n) " factorial: " (factorial n)))))))
+  (build-list 11 id))
+
+; Y Combinator
+; ============
+;
+; The motivation behind the Y Combinator is to write recursion using anonymous functions where the
+; recursion is implicit - so in the above example we cannot use the word "factorial". The
+; Y combinator is a higher-order function. It takes a single argument, which is a function that isn't
+; recursive. It returns a version of the function which is recursive.
+;
+; Essentially we are looking for a version of the function that has no free variables. Note that just
+; the name "factorial" is in itself a free variable (since it isn't an argument to the function
+; call).
+;
+; This is based of of [this][http://mvanier.livejournal.com/2897.html]("Y Combinator") website.
+
+
+(define (Y f)
+  ((lambda (x) (x x)) (lambda (x) (f (lambda (y) ((x x) y))))))
+
+(define (almost_fact f)
+  (lambda (n)
+    (if (equal? n 0)
+        1
+        (* n (f (- n 1))))))
+
+(define (almost_fib f)
+  (lambda (n)
+    (cond [(equal? n 0) 0]
+          [(equal? n 1) 1]
+          [else
+            (+ (f (- n 1)) (f (- n 2)))])))
+
+(define factorial (Y almost_fact))
+(define fibonnaci (Y almost_fib))
+
+(for-each
+  (lambda (n) (unless (= n 0)
+    (print (foldl1 string-append (map
+      to-string
+      (list "n: " n " fibonnaci: " (fibonnaci n) " factorial: " (factorial n)))))))
+  (build-list 11 id))

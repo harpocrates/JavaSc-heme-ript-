@@ -539,7 +539,7 @@ expand = function(x) {
 };
 
 evaluate = function(x, env) {
-  var arg, args, body, cond, conds, definition, definitions, e, expr, exprs, func, if_false, if_true, params, symbol, val, value, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _n, _o, _p, _ref10, _ref11, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+  var arg, args, body, cond, conds, definition, definitions, e, expr, exprs, func, if_false, if_true, params, symbol, val, value, _i, _j, _k, _l, _len, _len1, _len2, _len3, _len4, _m, _n, _o, _p, _ref10, _ref11, _ref12, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
   if (env == null) {
     env = global_env;
   }
@@ -645,15 +645,10 @@ evaluate = function(x, env) {
             });
             func = args.shift();
             Error.check(isa(func, Builtin, Lambda, Curried), "expected a function, not " + (to_string(func)));
-            if (isa(func, Builtin) || isa(func, Curried) && isa(func.parent, Builtin) || func.expected_args !== args.length) {
+            if (isa(func, Builtin) || isa(func, Curried) || func.expected_args !== args.length) {
               return func.call(args);
             }
-            x = isa(func, Curried) ? func.parent.body : func.body;
-            params = isa(func, Curried) ? func.parent.params : func.params;
-            if (isa(func, Curried)) {
-              args = func.fixed_args.concat(args);
-            }
-            env = new Env(params, args, func.env);
+            _ref12 = [func.body, new Env(func.params, args, func.env)], x = _ref12[0], env = _ref12[1];
         }
       }
     }

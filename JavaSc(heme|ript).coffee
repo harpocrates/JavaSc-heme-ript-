@@ -381,14 +381,10 @@ evaluate = (x, env=global_env) ->
             Error.check(isa(func, Builtin, Lambda, Curried),
               "expected a function, not #{to_string(func)}")
 
-            return func.call(args) if isa(func, Builtin) or
-                                      isa(func, Curried) and isa(func.parent, Builtin) or
-                                      func.expected_args != args.length
+            if isa(func, Builtin) or isa(func, Curried) or func.expected_args != args.length
+              return func.call(args)
 
-            x      = if isa(func, Curried) then func.parent.body else func.body
-            params = if isa(func, Curried) then func.parent.params else func.params
-            args   = func.fixed_args.concat(args) if isa(func, Curried)
-            env    = new Env(params, args, func.env)
+            [x, env] = [func.body, new Env(func.params, args, func.env)]
 
   catch e
     throw new Error("#{e.message}\n  in call to #{to_string(x)}") if (e instanceof Error)

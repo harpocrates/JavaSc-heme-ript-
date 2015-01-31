@@ -1,0 +1,101 @@
+;; A tail-recursive Fibonacci function
+(define (fib n)
+  (local [(define (fib1 n fn fm)
+            (if (= n 0)
+                fn
+                (fib1 (- n 1) fm (+ fn fm))))]
+    (fib1 n 0 1)))
+
+;; ...and some tests for it
+(fib 0)
+(fib 1)
+(fib 10)
+(fib 35)
+
+;; and some wacky shit to go!
+(define (reverse l) (foldl (flip cons) empty l))
+(reverse (list 1 2 3 4))
+;; and some even wackier shit to go!
+(define reverse (foldl (flip cons) empty))
+(reverse (list 1 2 3 4))
+
+; Testing the various quoting functionalities
+(define l '(1 2 3 4))
+`(1 (-1 0 ,@l) ,l ,@l ,@l)
+
+; Testing macros
+(define-macro (unless condition result)
+  `(if (not ,condition) ,result void))
+(define-macro (apply function arguments)
+  `(,function ,@(eval arguments)))
+
+(define pigs-can-fly false)
+(define im-in-fairview true)
+(unless im-in-fairview 'Entered-unless-1)
+(unless pigs-can-fly 'Entered-unless-2)
+
+(apply + (list 1 2))
+
+; a very contrived example that should not be used
+(define-macro (list-concat l1 l2)
+  `(list ,@(eval l1) ,@(eval l2)))
+(display (list-concat '(1 2 3 4 5) '(6 7 8 9 10)))
+
+; Testing currying
+(define times-two (* 2))
+(times-two 3)
+
+(foldr1 max (filter (> 9) (map (* 2) '(1 2 3 4 5 6))))
+
+; Testing `do` and `for-each`
+(define (fibonnaci n)
+  (do ([x  n (- x 1)  ]
+       [fn 0 fm       ]
+       [fm 1 (+ fn fm)])
+      [(zero? x) fn]))
+
+(for-each
+  (lambda (x) (display (fibonnaci x)))
+  '(1 2 3 4 5 6 7 8 9 10))
+
+; factorial using `do`
+(define (factorial n)
+  (do ([x   n (- x 1)  ]
+       [acc 1 (* x acc)])
+      [(zero? x) acc]))
+
+(for-each
+  (lambda (x) (display (factorial x)))
+  '(1 2 3 4 5 6 7 8 9 10))
+
+(recur fac ([n 10])
+     (if (zero? n)
+         1
+         (* n (fac (sub1 n)))))
+
+(let ([x 5])
+    (let ([x 2]
+          [y x])
+      (list y x)))
+
+(do ([n   10 (sub1 n) ]
+     [sum 0  (+ n sum)])
+  ((zero? n) sum))
+
+(define (fact n)
+  (recur fact ([n   n]
+               [acc 1])
+    (if (zero? n)
+        acc
+        (fact (- n 1) (* n acc)))))
+(define (fib n)
+  (recur fib ([n  n]
+              [fm 0]
+              [fn 1])
+    (if (zero? n)
+        fm
+        (fib (- n 1) fn (+ fm fn)))))
+(fact 10)
+(fib 10)
+
+(filter (equal? 4) (map (* 2) '(2 -1 0 1 2)))
