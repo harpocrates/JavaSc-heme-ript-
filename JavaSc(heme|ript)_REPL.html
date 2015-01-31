@@ -3,7 +3,7 @@
 <head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <title>JavaSc(heme|ript) 2.2</title>
-  <script type="text/javascript" src="JavaSc(heme|ript).js"></script>
+  <script type="text/javascript" src="https://raw.githubusercontent.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme|ript%29.js"></script>
   <script type="text/javascript">
     'use strict'
     exports.globals.dict['display'] = function(x) {
@@ -16,14 +16,14 @@
     xmlhttp.onreadystatechange = function () {
       if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {
         var parsed, file = xmlhttp.responseText;
-        for (var i in file)
-          if ((parsed = exports.read_line(file[i])) != null)
+        for (var i in string_content)
+          if ((parsed = exports.read_line(string_content[i])) != null)
             exports.evaluate(parsed);
         document.getElementById("run_button").disabled = false;
         document.getElementById('output_area').value += 'Done.\n>';
       }
     };
-    xmlhttp.open("GET", "Standard_Functions.jscm", true);
+    xmlhttp.open("GET", "https://raw.githubusercontent.com/harpocrates/JavaSc-heme-ript-/master/Standard_Functions.jscm", true);
     xmlhttp.send();
 
     // Run 'input' and send results to 'output'
@@ -59,7 +59,7 @@
 <h1>JavaSc(heme|ript) 2.2</h1>
 <table width="100%">
 <tr><td>
-<textarea rows="24" style="width:100%;resize:vertical;" id="output_area" readonly>Loading Standard Functions... </textarea>
+<textarea rows="24" style="width:100%;resize:vertical;" id="output_area" readonly>Loading Standard Functions file... </textarea>
 </td></tr>
 <tr><td>
 Enter your program below and press "Run".<br>
