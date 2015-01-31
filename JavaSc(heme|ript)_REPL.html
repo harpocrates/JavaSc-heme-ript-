@@ -7,36 +7,40 @@
   <script type="text/javascript" src="Standard_Functions.js"></script>
   <script type="text/javascript">
     'use strict'
+
     exports.globals.dict['display'] = function(x) {
       document.getElementById('output_area').value += to_string(x)+'\n';
     };
 
-    // Load file
-    function loadFile (string) {
-      var parsed;
-      for (var i in string)
-          if ((parsed = exports.read_line(string[i])) != null)
-            exports.evaluate(parsed);
-      document.getElementById("run_button").disabled = false;
-      document.getElementById('output_area').value += 'Done.\n>';
+    window.onload = function() {
+
+      // Load file
+      function loadFile (string) {
+        var parsed;
+        for (var i in string)
+            if ((parsed = exports.read_line(string[i])) != null)
+              exports.evaluate(parsed);
+        document.getElementById("run_button").disabled = false;
+        document.getElementById('output_area').value += 'Done.\n>';
+      }
+
+      // AJAX request to load 'Standard_Functions.jscm'
+      var xmlhttp = new XMLHttpRequest();
+
+      xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200)
+          loadFile(xmlhttp.responseText);
+      };
+      xmlhttp.open("GET", "Standard_Functions.jscm", true);
+      xmlhttp.send();
+      setTimeout(function () {
+        if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) return;
+        xmlhttp.abort()
+        var output = document.getElementById('output_area').value
+             += 'Failed (you might be previewing this from GitHub).\nAttempting back up load...';
+        loadFile(file);
+      }, 1000)
     }
-
-    // AJAX request to load 'Standard_Functions.jscm'
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200)
-        loadFile(xmlhttp.responseText);
-    };
-    xmlhttp.open("GET", "Standard_Functions.jscm", true);
-    xmlhttp.send();
-    setTimeout(function () {
-      if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) return;
-      xmlhttp.abort()
-      var output = document.getElementById('output_area').value
-           += 'Failed (you might be previewing this from GitHub).\nAttempting back up load...';
-      loadFile(file);
-    }, 1000)
 
     // Run 'input' and send results to 'output'
     function runContents() {
