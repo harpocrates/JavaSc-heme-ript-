@@ -13,6 +13,7 @@
 
     // Load file
     function loadFile (string) {
+      var parsed;
       for (var i in string)
           if ((parsed = exports.read_line(string[i])) != null)
             exports.evaluate(parsed);
@@ -24,10 +25,8 @@
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function () {
-      if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {
-        var parsed, file = xmlhttp.responseText;
-        loadFile(file);
-      }
+      if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200)
+        loadFile(xmlhttp.responseText);
     };
     xmlhttp.open("GET", "Standard_Functions.jscm", true);
     xmlhttp.send();
