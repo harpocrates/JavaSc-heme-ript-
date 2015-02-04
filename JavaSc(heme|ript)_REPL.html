@@ -3,14 +3,31 @@
 <head>
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <title>JavaSc(heme|ript) 2.2</title>
+  <!-- Syntax Highlighting from highlight.js -->
+  <script type="text/javascript" src="highlight.js/highlight.pack.js"></script>
+  <link href="highlight.js/github.css" title="GitHub" rel="stylesheet" />
+  <!-- JavaSc(heme|ript).js -->
   <script type="text/javascript" src="JavaSc(heme|ript).js"></script>
   <script type="text/javascript" src="Standard_Functions.js"></script>
+  <style type="text/css">
+  pre {
+    background: none repeat scroll 0% 0% #F8F8F8;
+    white-space: pre-wrap;
+    padding: 0px;
+    margin: 0px;
+  }
+  .clear {
+    position: absolute;
+    top: 2px;
+    right: 15px;
+    z-index: 10;
+  }
+  .container {
+    position: relative;
+  }
+  </style>
   <script type="text/javascript">
     'use strict'
-
-    exports.globals.dict['display'] = function(x) {
-      document.getElementById('output_area').value += to_string(x)+'\n';
-    };
 
     window.onload = function() {
 
@@ -21,7 +38,7 @@
             if ((parsed = exports.read_line(string[i])) != null)
               exports.evaluate(parsed);
         document.getElementById("run_button").disabled = false;
-        document.getElementById('output_area').value += 'Done.\n>';
+        document.getElementById('output_area').innerHTML += 'Done.\n';
       }
 
       // AJAX request to load 'Standard_Functions.jscm'
@@ -36,50 +53,81 @@
       setTimeout(function () {
         if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) return;
         xmlhttp.abort()
-        var output = document.getElementById('output_area').value
+        var output = document.getElementById('output_area').innerHTML
              += 'Failed. (You might be previewing this from GitHub).\nAttempting backup load... ';
         loadFile(file);
       }, 1000);
     };
 
-    // Run 'input' and send results to 'output'
-    function runContents() {
-    var input      = document.getElementById('input_area'),
-        output     = document.getElementById('output_area');
+    // Make a for each complete expression of code
+    function createCodeNode(string, displaystyle) {
+      var pre  = document.createElement("pre");
+      var code = document.createElement("code");
+      code.className = "scheme";
+      pre.style.display = displaystyle;
+      code.innerHTML = string;
+      pre.appendChild(code);
+      return pre;
+    }
 
-      var input_lines = input.value.split('\n');
-      input.value = '';
+    // Run 'input' and send results to 'output'
+    var input_code = "", in_progress = document.createElement("div");
+    in_progress.style.display = "block";
+    in_progress.style.color = "red";
+    function runContents() {
+      var input      = document.getElementById('input_area'),
+          output     = document.getElementById('output_area');
+
+      input.innerHTML = input.innerHTML.replace(/(?:<br( type="_moz")?>(<\/br>)?)/g, '\n');
+      var input_lines = input.innerHTML.split('\n');
+      input.innerHTML = '';
 
       for (var i in input_lines) {
         var line      = input_lines[i];
         if (line.trim() === '') continue;
         var parsed    = exports.read_line(line);
-        output.value += line.replace(/\s+$/g, '').concat('\n');
+        input_code += line.replace(/\s+$/g, '').concat('\n');
         var evaluated = (parsed !== null) ? exports.evaluate(parsed) : undefined;
 
-        if (evaluated !== undefined)
-          output.value += exports.to_string(evaluated).concat('\n')
-
-        output.value += (parsed == null) ? '|' : '>';
+        if (in_progress.parentNode == output)
+          output.removeChild(in_progress);
+        if (parsed !== null) {
+          var block = createCodeNode(input_code, "block");
+          output.appendChild(block);
+          hljs.highlightBlock(block);
+          input_code = "";
+        }
+        if (evaluated !== undefined) {
+          output.innerHTML += '   => '.concat(exports.to_string(evaluated));
+          hljs.highlightBlock(block);
+        }
+        in_progress.innerHTML = input_code;
+        output.appendChild(in_progress);
       }
-      output.scrollTop = output.scrollHeight;
+      output.parentNode.scrollTop = output.parentNode.scrollHeight;
     }
 
-    function toggleCurrying(checkbox) {
-      exports.curry = checkbox.checked;
-    }
   </script>
 </head>
 <body>
 
 <h1>JavaSc(heme|ript) 2.2</h1>
 <table width="100%">
-<tr><td>
-<textarea rows="24" style="width:100%;resize:vertical;" id="output_area" readonly>Loading Standard Functions file... </textarea>
-</td></tr>
-<tr><td>
-Enter your program below and press "Run".<br>
-<textarea rows="24" style="width:100%;resize:vertical;" id="input_area" autofocus>;; A tail-recursive Fibonacci function
+  <tr><td>
+  <div class="container">
+    <div class="clear">
+    <button type="button" onclick="document.getElementById('output_area').innerHTML = '';">clear</button>
+    </div>
+    <pre style="height:450px;overflow:scroll;overflow-x:hidden; border-style:solid;border-width:1px;"><code id="output_area" readonly>Loading Standard Functions file... </code></pre>
+  </div>
+  </td></tr>
+  <tr><td>
+  Enter your program below and press "Run".<br>
+  <div class="container">
+    <div class="clear">
+    <button type="button" onclick="document.getElementById('input_area').innerHTML = '';">clear</button>
+    </div>
+    <pre style="height:350px;overflow:scroll;overflow-x:hidden; border-style:solid;border-width:1px;" contenteditable id="input_area">;; A tail-recursive Fibonacci function
 (define (fib n)
   (local [(define (fib1 n fn fm)
             (if (= n 0)
@@ -100,12 +148,11 @@ Enter your program below and press "Run".<br>
 
 ;; With function currying enabled, *, which is normally takes two arguments (* a b) can be partially applied to produce a simple doubling function (* 2).
 (map (* 2) '(1 2 3 4 5))
-(map (lambda (n) (* 2 n)) '(1 2 3 4 5))
-</textarea>
-</td></tr>
+    </pre>
+  </div>
+  </td></tr>
 </table>
-<!-- <br> -->
 <button type="button" id="run_button" onclick="runContents()" disabled>Run</button>
-<label><input type="checkbox" onclick="toggleCurrying(this);" checked> Curry functions</label>
+<label><input type="checkbox" onclick="exports.curry = this.checked;" checked> Curry functions</label>
 </body>
 </html>
