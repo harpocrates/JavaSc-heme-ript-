@@ -1,0 +1,866 @@
+{
+    "keyEquivalent": "^~L",
+    "fileTypes": [
+        "jscm"
+    ],
+    "patterns": [
+        {
+            "include": "#comment"
+        },
+        {
+            "include": "#definition"
+        },
+        {
+            "include": "#tests"
+        },
+        {
+            "include": "#require"
+        },
+        {
+            "include": "#expression"
+        }
+    ],
+    "repository": {
+        "require": {
+            "patterns": [
+                {
+                    "begin": "(\\()(require)\\s",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "2": {
+                            "name": "storage.type.require.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\)"
+                }
+            ]
+        },
+        "definition": {
+            "patterns": [
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.function.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "6": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        },
+                        "5": {
+                            "name": "variable.parameter.function.scheme.javasc-heme-ript"
+                        },
+                        "4": {
+                            "name": "entity.name.function.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "(\\()(define)\\s+(\\()([^\\s\\[\\](){}|;#\"',`]+)((?>\\s[^)]*|))(\\))\\s",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.function.scheme.javasc-heme-ript"
+                },
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.macro.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "6": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        },
+                        "5": {
+                            "name": "variable.parameter.macro.scheme.javasc-heme-ript"
+                        },
+                        "4": {
+                            "name": "entity.name.macro.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "(\\()(define-macro)\\s+(\\()([^\\s\\[\\](){}|;#\"',`]+)\\s([^)]*)(\\))\\s",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.macro.scheme.javasc-heme-ript"
+                },
+                {
+                    "captures": {
+                        "3": {
+                            "name": "entity.name.macro.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.macro.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "4": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": false,
+                    "match": "(\\()(delete-macro)\\s+([^\\s\\[\\](){}|;#\"',`]+)(\\))",
+                    "name": "meta.definition.macro.scheme.javasc-heme-ript"
+                },
+                {
+                    "contentName": "variable.parameter.struct.scheme.javasc-heme-ript",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "entity.name.struct.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.struct.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "4": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "(\\()(define-struct)\\s+([^\\s\\[\\](){}|;#\"',`]+)\\s+(\\()",
+                    "end": "\\)\\)",
+                    "name": "meta.definition.struct.scheme.javasc-heme-ript"
+                },
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "entity.name.datatype.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.datatype.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "(\\()(define-datatype)\\s+([^\\s\\[\\](){}|;#\"',`]+)\\s+",
+                    "patterns": [
+                        {
+                            "include": "#_struct-block"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.datatype.scheme.javasc-heme-ript"
+                },
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "entity.name.variable.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.variable.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "(\\()(define|set!)\\s([^\\s\\[\\](){}|;#\"',`]+)\\s",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.variable.scheme.javasc-heme-ript"
+                },
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "entity.name.variable.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.macro.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "(\\()(define-macro)\\s([^\\s\\[\\](){}|;#\"',`]+)\\s",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.macro.scheme.javasc-heme-ript"
+                }
+            ]
+        },
+        "expression": {
+            "patterns": [
+                {
+                    "include": "#comment"
+                },
+                {
+                    "captures": {
+                        "2": {
+                            "name": "constant.numeric.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "(^|(?<=\\s))(-?(0|[1-9]\\d*)(\\.\\d+|/[1-9]\\d*)?)\\b"
+                },
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.end.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.string.begin.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "\"",
+                    "patterns": [
+                        {
+                            "match": "\\\\.",
+                            "name": "constant.character.escape.scheme.javasc-heme-ript"
+                        }
+                    ],
+                    "end": "(?<!\\\\)\"",
+                    "name": "string.quoted.double.scheme.javasc-heme-ript"
+                },
+                {
+                    "captures": {
+                        "2": {
+                            "name": "constant.language.boolean.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "(^|(?<=[\\s\\[\\](){}|;#\"',`]))(true|false|\\#t(rue)?|\\#f(alse)?)($|(?=[\\s\\[\\](){}|;#\"',`]))"
+                },
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.lambda.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "5": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        },
+                        "4": {
+                            "name": "variable.parameter.lambda.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "\\s*(\\()(lambda)\\s+(\\()([^\\[\\](){}|;#\"',`]*)(\\))",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.lambda.scheme.javasc-heme-ript"
+                },
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "3": {
+                            "name": "variable.parameter.lambda.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "storage.type.lambda.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "\\s*(\\()(lambda)\\s+([^\\s\\[\\](){}|;#\"',`]+)",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.lambda.scheme.javasc-heme-ript"
+                },
+                {
+                    "begin": "\\s*(\\()(begin|begin0|if|when|unless)\\s",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "2": {
+                            "name": "keyword.control.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\)"
+                },
+                {
+                    "begin": "\\s*(\\()(local)\\s",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#_local-block"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "2": {
+                            "name": "keyword.control.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\)"
+                },
+                {
+                    "begin": "\\s*(\\()(letrec|let*|let|do)\\s",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#_definition-block"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "2": {
+                            "name": "keyword.control.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\)"
+                },
+                {
+                    "begin": "\\s*(\\()(recur|let)\\s+([^\\s\\[\\](){}|;#\"',`]+)",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#_definition-block"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "3": {
+                            "name": "entity.name.loop.scheme.javasc-heme-ript"
+                        },
+                        "2": {
+                            "name": "keyword.control.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\)"
+                },
+                {
+                    "begin": "\\s*(\\()(cond)\\s",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#_cond-block"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "2": {
+                            "name": "keyword.control.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\)"
+                },
+                {
+                    "endCaptures": {
+                        "1": {
+                            "name": "control.operator.bracket.quoting.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "2": {
+                            "name": "control.operator.bracket.quoting.open.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "keyword.control.quoting.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "\\s*(')(\\()",
+                    "patterns": [
+                        {
+                            "include": "#quoted"
+                        }
+                    ],
+                    "end": "(\\))\\s*",
+                    "name": "entity.quoted.scheme.javasc-heme-ript"
+                },
+                {
+                    "endCaptures": {
+                        "1": {
+                            "name": "control.operator.bracket.quoting.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "2": {
+                            "name": "control.operator.bracket.quoting.open.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "keyword.control.quoting.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "\\s*(`)(\\()",
+                    "patterns": [
+                        {
+                            "include": "#quasi-quoted"
+                        }
+                    ],
+                    "end": "(\\))\\s*",
+                    "name": "entity.quoted.quasi.scheme.javasc-heme-ript"
+                },
+                {
+                    "captures": {
+                        "2": {
+                            "name": "support.constant.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "(^|(?<=[\\s\\[\\](){}|;#\"',`]))(void|empty)($|(?=[\\s\\[\\](){}|;#\"',`]))"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "support.functions.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "(?<=\\()(andmap|ormap|apply|compose|build-list|filter|map|foldl1?|foldr1?|for-each|procedure?)\\s"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.function.call.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "(?<=\\()([^\\s\\[\\](){}|;#\"',`]+)"
+                },
+                {
+                    "begin": "\\s*(\\()",
+                    "endCaptures": {
+                        "1": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "(\\))\\s*"
+                },
+                {
+                    "begin": "\\s*(\\[)",
+                    "endCaptures": {
+                        "1": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "(\\])\\s*"
+                },
+                {
+                    "captures": {
+                        "1": {
+                            "name": "keyword.control.quoting.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "('|`)[^\\s\\[\\](){}|;#\"',`]+",
+                    "name": "entity.quoted.scheme.javasc-heme-ript"
+                }
+            ]
+        },
+        "_struct-block": {
+            "patterns": [
+                {
+                    "begin": "(\\[)([^\\s\\[\\](){}|;#\"',`]+)",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.struct-block.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "2": {
+                            "name": "entity.name.struct.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.struct-block.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\]",
+                    "contentName": "variable.parameter.struct.scheme.javasc-heme-ript"
+                }
+            ]
+        },
+        "tests": {
+            "patterns": [
+                {
+                    "begin": "(\\()(check-expect)\\s",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "2": {
+                            "name": "storage.type.check-expect.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\)"
+                }
+            ]
+        },
+        "comment": {
+            "patterns": [
+                {
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.comment.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "(#?;).*$\\n?",
+                    "name": "comment.line.semicolon.scheme.javasc-heme-ript"
+                }
+            ]
+        },
+        "_definition-block": {
+            "patterns": [
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "2": {
+                            "name": "entity.name.variable.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "\\s*(\\()\\s*(?=\\[)",
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#_definition-pair"
+                        }
+                    ],
+                    "end": "\\)",
+                    "name": "meta.definition.block.scheme.javasc-heme-ript"
+                }
+            ]
+        },
+        "quoted": {
+            "patterns": [
+                {
+                    "begin": "\\s*(\\()",
+                    "patterns": [
+                        {
+                            "include": "#quoted"
+                        }
+                    ],
+                    "end": "(\\))\\s*"
+                },
+                {
+                    "begin": "\\s*(\\[)",
+                    "patterns": [
+                        {
+                            "include": "#quoted"
+                        }
+                    ],
+                    "end": "(\\])\\s*"
+                }
+            ]
+        },
+        "quasi-quoted": {
+            "patterns": [
+                {
+                    "endCaptures": {
+                        "1": {
+                            "name": "control.operator.bracket.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "2": {
+                            "name": "control.operator.bracket.open.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "keyword.control.quoting.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "\\s*(,@?)(\\()",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "(\\))\\s*",
+                    "contentName": "entity.expression.scheme.javasc-heme-ript"
+                },
+                {
+                    "captures": {
+                        "2": {
+                            "name": "entity.expression.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "keyword.control.quoting.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "match": "(,@?)([^\\s\\[\\](){}|;#\"',`]+)"
+                },
+                {
+                    "begin": "\\s*(\\()\\s*",
+                    "patterns": [
+                        {
+                            "include": "#quasi-quoted"
+                        }
+                    ],
+                    "end": "\\s*(\\))\\s*"
+                },
+                {
+                    "begin": "\\s*(\\[)",
+                    "patterns": [
+                        {
+                            "include": "#quasi-quoted"
+                        }
+                    ],
+                    "end": "(\\])\\s*"
+                }
+            ]
+        },
+        "_definition-pair": {
+            "patterns": [
+                {
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.definition-pair.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "beginCaptures": {
+                        "2": {
+                            "name": "entity.name.variable.scheme.javasc-heme-ript"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.definition-pair.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "begin": "(\\[)([^\\s\\[\\](){}|;#\"',`]+)",
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "end": "\\]",
+                    "name": "meta.definition.variable.scheme.javasc-heme-ript"
+                }
+            ]
+        },
+        "_cond-block": {
+            "patterns": [
+                {
+                    "begin": "(\\[)\\s*(else)\\s",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.cond.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "2": {
+                            "name": "keyword.control"
+                        },
+                        "1": {
+                            "name": "control.operator.bracket.cond.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\]"
+                },
+                {
+                    "begin": "\\[",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.cond.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.cond.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\]"
+                }
+            ]
+        },
+        "_local-block": {
+            "patterns": [
+                {
+                    "begin": "\\[",
+                    "endCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.local.close.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#comment"
+                        },
+                        {
+                            "include": "#definition"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "0": {
+                            "name": "control.operator.bracket.local.open.scheme.javasc-heme-ript"
+                        }
+                    },
+                    "end": "\\]"
+                }
+            ]
+        }
+    },
+    "uuid": "b9471bee-7dcb-4cfb-86f9-9cc89c0d6a67",
+    "foldingStopMarker": "\\)",
+    "scopeName": "source.scheme.javasc-heme-ript",
+    "foldingStartMarker": "\\(",
+    "name": "JavaSc(heme|ript)"
+}
