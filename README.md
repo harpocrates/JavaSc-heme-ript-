@@ -86,7 +86,7 @@ The fixed-point combinator (aka the Y combinator) for transforming recursive fun
         (* n (f (- n 1))))))
 
 ; A full-fledged factorial function without any recursion/loops
-(define factorial (Y almost_fact))
+(define factorial (Y almost_factorial))
 ```
 
 Calling `(factorial 21)` gives `51090942171709440000`. A screenshot of the Node.js REPL, run from the console, is included below.
