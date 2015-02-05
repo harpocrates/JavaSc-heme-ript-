@@ -6,7 +6,7 @@ A minimal 400 line implementation of a simple Scheme dialect, built around exist
 
 Also included is a `.tmlanguage` definition of JavaSc(heme|ript), compatible with a variety of text editors including Sublime Text and Textmate.
 
-[1]: http://rawgit.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme|ript%29_REPL.html "JavaSc(heme|ript)""
+[1]: http://rawgit.com/harpocrates/JavaSc-heme-ript-/master/JavaSc%28heme%7Cript%29_REPL.html "JavaSc(heme|ript)""
 
 ## Features
 
