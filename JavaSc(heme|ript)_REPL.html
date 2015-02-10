@@ -38,7 +38,7 @@
         for (var i in string)
             if ((parsed = exports.read_line(string[i])) != null)
               exports.evaluate(parsed);
-        document.getElementById("run_button").disabled = false;
+        document.getElementById('run_button').disabled = false;
         document.getElementById('output_area').innerHTML += 'Done.\n';
       }
 
@@ -49,7 +49,7 @@
         if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200)
           loadFile(xmlhttp.responseText);
       };
-      xmlhttp.open("GET", "Standard_Functions.jscm", true);
+      xmlhttp.open('GET', 'Standard_Functions.jscm', true);
       xmlhttp.send();
       setTimeout(function () {
         if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) return;
@@ -62,9 +62,9 @@
 
     // Make a for each complete expression of code
     function createCodeNode(string, displaystyle) {
-      var pre  = document.createElement("pre");
-      var code = document.createElement("code");
-      code.className = "scheme";
+      var pre  = document.createElement('pre');
+      var code = document.createElement('code');
+      code.className = 'scheme';
       pre.style.display = displaystyle;
       code.innerHTML = string;
       pre.appendChild(code);
@@ -72,9 +72,9 @@
     }
 
     // Run 'input' and send results to 'output'
-    var input_code = "", in_progress = document.createElement("div");
-    in_progress.style.display = "block";
-    in_progress.style.color = "red";
+    var input_code = '', in_progress = document.createElement('div');
+    in_progress.style.display = 'block';
+    in_progress.style.color = 'red';
     function runContents() {
       var input      = document.getElementById('input_area'),
           output     = document.getElementById('output_area');
@@ -93,7 +93,7 @@
         if (in_progress.parentNode == output)
           output.removeChild(in_progress);
         if (parsed !== null) {
-          var block = createCodeNode(input_code, "block");
+          var block = createCodeNode(input_code, 'block');
           output.appendChild(block);
           hljs.highlightBlock(block);
           input_code = "";
